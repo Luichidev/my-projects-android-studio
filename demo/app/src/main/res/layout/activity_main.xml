@@ -40,13 +40,13 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/checkCredential"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:id="@+id/checkCredential"
+        android:layout_marginTop="@dimen/common_padding_default"
         android:hint="Enviar"
         android:textColor="@color/white"
-        android:layout_marginTop="@dimen/common_padding_default"
-        >
+        tools:text="Enviar">
 
     </com.google.android.material.button.MaterialButton>
 
