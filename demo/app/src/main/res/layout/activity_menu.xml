@@ -4,48 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity2">
+    tools:context=".Menu">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView4"
+        <Switch
+            android:id="@+id/onIA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Datos del usuario"
             android:layout_gravity="center_horizontal"
-            android:textSize="26dp"
-            android:layout_marginTop="10dp"
-            android:textColor="@color/red"
-            />
-
-        <TextView
-            android:id="@+id/outputLabel1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="10dp"
-            android:layout_gravity="center_horizontal"
-            />
-
-        <TextView
-            android:id="@+id/outputLabel2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_marginLeft="10dp"
-            android:layout_gravity="center_horizontal"
-            />
+            android:layout_marginTop="50dp"
+            android:text="IA"
+            android:textColor="@color/black" />
 
         <Button
-            android:id="@+id/finished"
+            android:id="@+id/go3EnRaya"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="40dp"
-            android:text="finish" />
+            android:layout_marginTop="60dp"
+            android:text="3 en Raya" />
+
+        <Button
+            android:id="@+id/goRgister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:text="Register" />
+
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
