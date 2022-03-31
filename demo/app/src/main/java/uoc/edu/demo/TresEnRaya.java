@@ -6,10 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Switch;
 import android.widget.TextView;
-
-import java.util.Random;
 
 public class TresEnRaya extends AppCompatActivity {
 		Button[][] board = new Button[3][3];
@@ -19,7 +16,7 @@ public class TresEnRaya extends AppCompatActivity {
 		private final String EMPTY = "";
 		Button btn_play;
 		private boolean turnOfX = false;
-		private boolean withIA;
+		private boolean withIA = false;
 
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
@@ -31,17 +28,14 @@ public class TresEnRaya extends AppCompatActivity {
 				Intent intent = getIntent();
 				withIA = intent.getBooleanExtra(Menu.AI_ENABLED, false);
 
-
-
-				msg.setText("Juegan las X");
 				updateUserTurn();
 
-				for (int col = 0; col < MAX_COL; col++) {
-					for (int row = 0; row < MAX_ROW; row++) {
-						String btnId = "btn_"+col+row;
+				for (int row = 0; row < MAX_COL; row++) {
+					for (int col = 0; col < MAX_ROW; col++) {
+						String btnId = "btn_"+row+col;
 						int resID = getResources().getIdentifier(btnId,"id", getPackageName());
-						board[col][row] = findViewById(resID);
-						board[col][row].setOnClickListener(new View.OnClickListener() {
+						board[row][col] = findViewById(resID);
+						board[row][col].setOnClickListener(new View.OnClickListener() {
 							@Override
 							public void onClick(View view) {
 								Button btn = (Button) view;
@@ -58,7 +52,7 @@ public class TresEnRaya extends AppCompatActivity {
 								if(!winner){
 									turnOfX = !turnOfX;
 									updateUserTurn();
-									if (withIA){
+									if (turnOfX && withIA){
 										updateAI();
 									}
 								}
@@ -80,9 +74,9 @@ public class TresEnRaya extends AppCompatActivity {
 
 		private void resetBoard(){
 			btn_play.setVisibility(View.INVISIBLE);
-			for (int col = 0; col < MAX_COL; col++) {
-					for (int row = 0; row < MAX_ROW; row++) {
-							board[col][row].setText(EMPTY);
+			for (int row = 0; row < MAX_COL; row++) {
+					for (int col = 0; col < MAX_ROW; col++) {
+							board[row][col].setText(EMPTY);
 					}
 			}
 		}
@@ -91,9 +85,9 @@ public class TresEnRaya extends AppCompatActivity {
 			boolean winner = false;
 			String[][] field = new String[3][3];
 
-			for (int col = 0; col < MAX_COL; col++) {
-				for (int row = 0; row < MAX_ROW; row++) {
-					field[col][row] = board[col][row].getText().toString();
+			for (int row = 0; row < MAX_COL; row++) {
+				for (int col = 0; col < MAX_ROW; col++) {
+					field[row][col] = board[row][col].getText().toString();
 				}
 			}
 
@@ -137,24 +131,27 @@ public class TresEnRaya extends AppCompatActivity {
 
 		private void updateUserTurn(){
 			if(turnOfX){
-				msg.setText("Turno de las X");
+				if(withIA){
+					msg.setText("Turno de las X (IA)");
+				} else {
+					msg.setText("Turno de las X");
+				}
 			} else {
 				msg.setText("Turno de las O");
 			}
 		}
 
 		private void updateAI(){
-			int min = 0;
-			int max = 2;
-			Random random = new Random();
+			int Min = 0;
+			int Max = 2;
 			int col;
 			int row;
 
 			do {
-					col = random.nextInt(max + 1 - min) + min;
-					row = random.nextInt(max + 1 - min) + min;
-			} while(board[col][row].getText().toString().equals(EMPTY));
+					col = Min + (int)(Math.random() * ((Max - Min) + 1));
+					row = Min + (int)(Math.random() * ((Max - Min) + 1));
+			} while(board[row][col].getText().toString().compareTo(EMPTY) != 0);
 
-			board[col][row].performClick();
+			board[row][col].performClick();
 		}
 }
