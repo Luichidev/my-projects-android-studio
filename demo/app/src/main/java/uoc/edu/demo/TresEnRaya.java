@@ -3,7 +3,6 @@ package uoc.edu.demo;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -80,7 +79,6 @@ public class TresEnRaya extends AppCompatActivity {
 
 		private void resetBoard(){
 			btn_play.setVisibility(View.INVISIBLE);
-			Drawable icon= getApplicationContext().getResources().getDrawable( R.drawable.tictactoe_empty_cell);
 			for (int row = 0; row < MAX_COL; row++) {
 					for (int col = 0; col < MAX_ROW; col++) {
 							board[row][col].setTag(EMPTY);
