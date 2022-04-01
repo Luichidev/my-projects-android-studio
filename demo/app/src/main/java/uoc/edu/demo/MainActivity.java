@@ -76,21 +76,21 @@ public class MainActivity extends AppCompatActivity {
 
 	}
 
-		// You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
-		ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
-				new ActivityResultContracts.StartActivityForResult(),
-				new ActivityResultCallback<ActivityResult>() {
-						@Override
-						public void onActivityResult(ActivityResult result) {
-								if (result.getResultCode() == Activity.RESULT_OK) {
-										// There are no request codes
-										Intent data = result.getData();
+	// You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
+	ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+			new ActivityResultContracts.StartActivityForResult(),
+			new ActivityResultCallback<ActivityResult>() {
+					@Override
+					public void onActivityResult(ActivityResult result) {
+							if (result.getResultCode() == Activity.RESULT_OK) {
+									// There are no request codes
+									Intent data = result.getData();
 
-										float value = data.getFloatExtra("ResultData", -1);
-										checkCredentials.setText("Valor " + value);
-								}
-						}
-				});
+									float value = data.getFloatExtra("ResultData", -1);
+									checkCredentials.setText("Valor " + value);
+							}
+					}
+			});
 
 	private boolean hasMayus(String p) {
 		char clave;

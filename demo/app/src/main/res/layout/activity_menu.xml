@@ -11,23 +11,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Switch
-            android:id="@+id/onIA"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="50dp"
-            android:text="IA"
-            android:textColor="@color/black" />
-
-        <Button
-            android:id="@+id/go3EnRaya"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="60dp"
-            android:text="3 en Raya" />
-
         <Button
             android:id="@+id/goRgister"
             android:layout_width="wrap_content"
@@ -35,6 +18,38 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:text="Register" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/go3EnRaya"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text="3 en Raya" />
+
+            <Switch
+                android:id="@+id/onIA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:minHeight="48dp"
+                android:text="IA"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            tools:srcCompat="@drawable/tictactoe_title" />
 
     </LinearLayout>
 
