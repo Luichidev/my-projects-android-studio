@@ -3,4 +3,5 @@
     <string name="button">Button</string>
     <string name="hint_name">nombre</string>
     <string name="hint_password">password</string>
+    <string name="game_cells">game_cells</string>
 </resources>
