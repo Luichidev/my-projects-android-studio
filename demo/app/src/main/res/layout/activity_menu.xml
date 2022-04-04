@@ -12,14 +12,6 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/photo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:text="Select Photo" />
-
-        <Button
             android:id="@+id/goRgister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,11 +19,18 @@
             android:layout_marginTop="20dp"
             android:text="Register" />
 
+        <Button
+            android:id="@+id/userProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="User Profile" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/go3EnRaya"
@@ -39,6 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
                 android:text="3 en Raya" />
 
             <Switch
@@ -55,9 +55,17 @@
         <ImageView
             android:id="@+id/imageTitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="300dp"
             android:layout_marginTop="30dp"
             tools:srcCompat="@drawable/tictactoe_title" />
+
+        <Button
+            android:id="@+id/photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:text="Select Photo" />
 
     </LinearLayout>
 
