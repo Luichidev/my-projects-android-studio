@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ public class Menu extends AppCompatActivity {
 		public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
 		Switch switchIA;
 		ImageView imgTitle;
+		EditText id;
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
 				super.onCreate(savedInstanceState);
@@ -43,6 +45,9 @@ public class Menu extends AppCompatActivity {
 				Button tresEnRaya = findViewById(R.id.go3EnRaya);
 				Button photo = findViewById(R.id.photo);
 				Button userProfile = findViewById(R.id.userProfile);
+				Button viewUser = findViewById(R.id.viewUser);
+				Button editUser = findViewById(R.id.editUser);
+				id = findViewById(R.id.userId);
 				imgTitle.setImageResource(R.drawable.tictactoe_title);
 
 				register.setOnClickListener(new View.OnClickListener() {
@@ -72,9 +77,50 @@ public class Menu extends AppCompatActivity {
 			userProfile.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
+					int usertID = 0;
+					try {
+						usertID = Integer.parseInt(id.getText().toString());
+					} catch (NumberFormatException e){
+						Toast.makeText(getApplicationContext(),"El user id debe ser numérico!", Toast.LENGTH_SHORT).show();
+					}
 					Intent intent = new Intent(Menu.this, UserProfile.class);
+					intent.putExtra(UserProfile.NEW_USER, true);
+					intent.putExtra(UserProfile.EDIT_MODE, true);
+					intent.putExtra(UserProfile.USER_ID, usertID);
 					startActivity(intent);
+				}
+			});
 
+			viewUser.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					int usertID = 0;
+					try {
+						usertID = Integer.parseInt(id.getText().toString());
+					} catch (NumberFormatException e){
+						Toast.makeText(getApplicationContext(),"El user id debe ser numérico!", Toast.LENGTH_SHORT).show();
+					}
+					Intent intent = new Intent(Menu.this, UserProfile.class);
+					intent.putExtra(UserProfile.NEW_USER, false);
+					intent.putExtra(UserProfile.EDIT_MODE, false);
+					intent.putExtra(UserProfile.USER_ID, usertID);
+					startActivity(intent);
+				}
+			});
+			editUser.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					int usertID = 0;
+					try {
+						usertID = Integer.parseInt(id.getText().toString());
+					} catch (NumberFormatException e){
+						Toast.makeText(getApplicationContext(),"El user id debe ser numérico!", Toast.LENGTH_SHORT).show();
+					}
+					Intent intent = new Intent(Menu.this, UserProfile.class);
+					intent.putExtra(UserProfile.NEW_USER, false);
+					intent.putExtra(UserProfile.EDIT_MODE, true);
+					intent.putExtra(UserProfile.USER_ID, usertID);
+					startActivity(intent);
 				}
 			});
 

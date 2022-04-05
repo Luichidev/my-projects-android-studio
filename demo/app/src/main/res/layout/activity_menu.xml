@@ -19,13 +19,6 @@
             android:layout_marginTop="20dp"
             android:text="Register" />
 
-        <Button
-            android:id="@+id/userProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="User Profile" />
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,7 +48,7 @@
         <ImageView
             android:id="@+id/imageTitle"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="200dp"
             android:layout_marginTop="30dp"
             tools:srcCompat="@drawable/tictactoe_title" />
 
@@ -66,6 +59,49 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:text="Select Photo" />
+
+        <EditText
+            android:id="@+id/userId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Introduce id user" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/userProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Create User" />
+
+            <Button
+                android:id="@+id/editUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Edit user" />
+
+            <Button
+                android:id="@+id/viewUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="View user" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -10,15 +10,18 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,29 +29,46 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserProfile extends AppCompatActivity {
 	public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
-	private ImageView avatarImage;
+	public static final String EDIT_MODE = "USER_PROFILE_EDIT_MODE";
+	public static final String NEW_USER = "USER_PROFILE_NEW_USER";
+	public static final String USER_ID = "USER_ID";
+	private final int INFO_USER_NAME = 0;
+	private final int INFO_USER_EMAIL = 1;
+	private final int INFO_USER_PICTURE = 2;
+	private static final String KEY_INFO_USER_NAME = "INFO_USER_NAME";
+	private static final String KEY_INFO_USER_EMAIL = "INFO_USER_EMAIL";
+	private static final String KEY_INFO_USER_PICTURE = "INFO_USER_PICTURE";
+	private static final String ID_USER_PROFILE = "ID_USER_PROFILE";
+	private ImageView userAvatar;
+	private ImageView editAvatar;
 	private EditText userName;
 	private EditText userEmail;
 	private TextView errorUser;
 	private TextView errorEmail;
-	private Button save;
+	private Button btn_save;
 	private final String EMPTY = "";
+	private Integer id;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_user_profile);
+		Intent intent = getIntent();
+		Boolean editMode = intent.getBooleanExtra(EDIT_MODE, false);
+		Boolean newUser = intent.getBooleanExtra(NEW_USER, false);
+		id = intent.getIntExtra(USER_ID, 0);
 		ImageView avatar = findViewById(R.id.userAvatar);
 		avatar.setImageResource(R.drawable.no_avatar);
-		ImageView editAvatar = findViewById(R.id.editAvatar);
-		avatarImage = findViewById(R.id.userAvatar);
-		save = findViewById(R.id.btn_save);
-		save.setEnabled(false);
+		editAvatar = findViewById(R.id.editAvatar);
+		userAvatar = findViewById(R.id.userAvatar);
+		btn_save = findViewById(R.id.btn_save);
+
 
 		userName = findViewById(R.id.editUserName);
 		userEmail = findViewById(R.id.editEmail);
@@ -57,6 +77,15 @@ public class UserProfile extends AppCompatActivity {
 		errorUser.setVisibility(View.INVISIBLE);
 		errorEmail.setVisibility(View.INVISIBLE);
 
+		setEditMode(editMode || newUser);
+
+		if (!newUser){
+			//get data from info provider (webservice, from disk)...
+			String[] userInfo = new String[3];
+
+			getUserInfo(userInfo);
+			setInfoOnWidgets(userInfo);
+		}
 		editAvatar.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -66,9 +95,26 @@ public class UserProfile extends AppCompatActivity {
 			}
 		});
 
-		save.setOnClickListener(new View.OnClickListener() {
+		btn_save.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				String finalFile = ID_USER_PROFILE + "_" + id;
+				SharedPreferences pref = getSharedPreferences(finalFile, Context.MODE_PRIVATE);
+				SharedPreferences.Editor editor = pref.edit();
+				editor.putString(KEY_INFO_USER_NAME, userName.getText().toString());
+				editor.putString(KEY_INFO_USER_EMAIL, userEmail.getText().toString());
+
+				//Convert from bitmap to base64 string
+				BitmapDrawable drawable = (BitmapDrawable) userAvatar.getDrawable();
+				Bitmap bitmap = drawable.getBitmap();
+				ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+				bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+				byte[] byteArray = byteArrayOutputStream .toByteArray();
+
+				String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+				editor.putString(KEY_INFO_USER_PICTURE, encoded);
+
+				editor.commit();
 				Toast.makeText(getApplicationContext(), "💾 Guardado!", Toast.LENGTH_LONG).show();
 			}
 		});
@@ -94,6 +140,37 @@ public class UserProfile extends AppCompatActivity {
 				checkEmail();
 			}
 		});
+	}
+
+	private void setEditMode(boolean editMode){
+		if (!editMode){
+			editAvatar.setVisibility(View.INVISIBLE);
+			btn_save.setVisibility(View.INVISIBLE);
+			userName.setEnabled(false);
+			userEmail.setEnabled(false);
+		}else{
+			editAvatar.setVisibility(View.VISIBLE);
+			btn_save.setVisibility(View.VISIBLE);
+			userName.setEnabled(true);
+			userEmail.setEnabled(true);
+		}
+	}
+
+	private void getUserInfo(String[] userInfo){
+		String finalFile = ID_USER_PROFILE + "_" + id;
+		SharedPreferences pref = getSharedPreferences(finalFile, Context.MODE_PRIVATE);
+		userInfo[INFO_USER_NAME] = pref.getString(KEY_INFO_USER_NAME,"");
+		userInfo[INFO_USER_EMAIL] = pref.getString(KEY_INFO_USER_EMAIL, "");
+		userInfo[INFO_USER_PICTURE] = pref.getString(KEY_INFO_USER_PICTURE, "");
+	}
+	private void setInfoOnWidgets(String[] userInfo) {
+		userName.setText(userInfo[INFO_USER_NAME]);
+		userEmail.setText(userInfo[INFO_USER_EMAIL]);
+		if(userInfo[INFO_USER_PICTURE].compareTo(EMPTY) != 0){
+			byte[] decodedString = Base64.decode(userInfo[INFO_USER_PICTURE], Base64.DEFAULT);
+			Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0,decodedString.length);
+			userAvatar.setImageBitmap(decodedByte);
+		}
 	}
 
 	private void chooseImage(Context context) {
@@ -175,7 +252,7 @@ public class UserProfile extends AppCompatActivity {
 				case 0:
 					if (resultCode == RESULT_OK && data != null) {
 						Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
-						avatarImage.setImageBitmap(selectedImage);
+						userAvatar.setImageBitmap(selectedImage);
 					}
 					break;
 				case 1:
@@ -188,7 +265,7 @@ public class UserProfile extends AppCompatActivity {
 								cursor.moveToFirst();
 								int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
 								String picturePath = cursor.getString(columnIndex);
-								avatarImage.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+								userAvatar.setImageBitmap(BitmapFactory.decodeFile(picturePath));
 								cursor.close();
 							}
 						}
@@ -198,16 +275,6 @@ public class UserProfile extends AppCompatActivity {
 		}
 	}
 
-	private void enabledButton(){
-		String textName = userName.getText().toString();
-		String textEmail = userEmail.getText().toString();
-
-		if( (textName.compareTo(EMPTY) != 0) && (textEmail.compareTo(EMPTY) != 0)){
-			save.setEnabled(true);
-		} else {
-			save.setEnabled(false);
-		}
-	}
 
 	private boolean isEmail(String email) {
 		String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
@@ -222,18 +289,17 @@ public class UserProfile extends AppCompatActivity {
 			errorEmail.setText("Debe ser un email con formato válido!");
 		} else {
 			errorEmail.setVisibility(View.INVISIBLE);
-			enabledButton();
 		}
 
 	}
 
 	private void checkName(){
 		String s_name = userName.getText().toString();
-		if(s_name.length() > 5){
-			enabledButton();
-		} else {
+		if(s_name.length() < 5){
 			errorUser.setVisibility(View.VISIBLE);
 			errorUser.setText("El nombre debe tener minimo 5 caracteres.");
+		} else {
+			errorUser.setVisibility(View.INVISIBLE);
 		}
 	}
 }
