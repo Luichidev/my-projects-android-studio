@@ -24,7 +24,13 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Menu extends AppCompatActivity {
@@ -49,6 +55,35 @@ public class Menu extends AppCompatActivity {
 				Button editUser = findViewById(R.id.editUser);
 				id = findViewById(R.id.userId);
 				imgTitle.setImageResource(R.drawable.tictactoe_title);
+
+
+				//Expense Manager
+				Expense expense = new Expense("rest. ca la pagesa", 100, "01/03/2010");
+				expense.addPayer("Enric", 50);
+				expense.addPayer("Jose Miguel", 50);
+
+				User user1 =  new User("Enric", "evergaraca@uoc.edu", null);
+				User user2 =  new User("Jose miguel", "jm@uoc.edu", null);
+				Trip newTrip = new Trip(null, "01/02/2010", "La volta al món");
+				newTrip.addUser(user1);
+				newTrip.addUser(user2);
+				newTrip.addExpense(expense);
+
+				ObjectMapper mapper = new ObjectMapper();
+				String jsonStr = null;
+				try {
+					jsonStr = mapper.writeValueAsString(newTrip);
+				} catch (JsonProcessingException e){
+					e.printStackTrace();
+				}
+
+				try {
+					Trip tripAux = mapper.readValue(jsonStr, Trip.class);
+				} catch (IOException e){
+					e.printStackTrace();
+				}
+
+
 
 				register.setOnClickListener(new View.OnClickListener() {
 						@Override

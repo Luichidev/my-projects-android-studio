@@ -16,26 +16,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
             android:orientation="horizontal">
 
-            <ImageView
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/userAvatar"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="30dp"
-                android:contentDescription="Avatar del usuario"
-                tools:srcCompat="@drawable/no_avatar" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/no_avatar"
+                app:riv_border_color="#333333"
+                app:riv_border_width="0.5dip"
+                app:riv_corner_radius="30dip"
+                app:riv_mutate_background="true"
+                app:riv_oval="true"
+                app:riv_tile_mode="clamp" />
 
             <ImageView
                 android:id="@+id/editAvatar"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="bottom"
+                android:contentDescription="Edición de la imagen"
                 android:translationX="-30dp"
                 android:translationY="-30dp"
-                android:contentDescription="Edición de la imagen"
                 app:srcCompat="@drawable/edit_avatar" />
 
         </LinearLayout>
@@ -61,13 +68,14 @@
             <EditText
                 android:id="@+id/editUserName"
                 android:layout_width="250dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="User Name"
                 android:inputType="textPersonName"
-                android:text="" />
+                android:text=""
+                android:textColorHint="#757575" />
         </LinearLayout>
 
         <LinearLayout
@@ -79,10 +87,10 @@
                 android:id="@+id/errorUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginStart="100dp"
-                android:textColor="@color/red"
-                android:text="TextView" />
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textColor="#DD2C00" />
         </LinearLayout>
 
         <LinearLayout
@@ -105,13 +113,13 @@
             <EditText
                 android:id="@+id/editEmail"
                 android:layout_width="250dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textEmailAddress"
                 android:hint="Email"
-                android:layout_marginEnd="10dp"
+                android:inputType="textEmailAddress"
                 android:text="" />
 
         </LinearLayout>
@@ -124,10 +132,10 @@
                 android:id="@+id/errorEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginStart="100dp"
-                android:textColor="@color/red"
-                android:text="TextView" />
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textColor="#DD2C00" />
         </LinearLayout>
 
         <Button

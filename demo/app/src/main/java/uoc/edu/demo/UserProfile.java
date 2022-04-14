@@ -45,6 +45,7 @@ public class UserProfile extends AppCompatActivity {
 	private static final String KEY_INFO_USER_EMAIL = "INFO_USER_EMAIL";
 	private static final String KEY_INFO_USER_PICTURE = "INFO_USER_PICTURE";
 	private static final String ID_USER_PROFILE = "ID_USER_PROFILE";
+	private String pictureAux = null;
 	private ImageView userAvatar;
 	private ImageView editAvatar;
 	private EditText userName;
@@ -105,14 +106,7 @@ public class UserProfile extends AppCompatActivity {
 				editor.putString(KEY_INFO_USER_EMAIL, userEmail.getText().toString());
 
 				//Convert from bitmap to base64 string
-				BitmapDrawable drawable = (BitmapDrawable) userAvatar.getDrawable();
-				Bitmap bitmap = drawable.getBitmap();
-				ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-				bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-				byte[] byteArray = byteArrayOutputStream .toByteArray();
-
-				String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
-				editor.putString(KEY_INFO_USER_PICTURE, encoded);
+				editor.putString(KEY_INFO_USER_PICTURE, pictureAux);
 
 				editor.commit();
 				Toast.makeText(getApplicationContext(), "💾 Guardado!", Toast.LENGTH_LONG).show();
@@ -253,6 +247,11 @@ public class UserProfile extends AppCompatActivity {
 					if (resultCode == RESULT_OK && data != null) {
 						Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
 						userAvatar.setImageBitmap(selectedImage);
+						ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+						selectedImage.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+						byte[] byteArray = byteArrayOutputStream .toByteArray();
+						String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+						pictureAux = encoded;
 					}
 					break;
 				case 1:
@@ -266,6 +265,12 @@ public class UserProfile extends AppCompatActivity {
 								int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
 								String picturePath = cursor.getString(columnIndex);
 								userAvatar.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+
+								ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+								BitmapFactory.decodeFile(picturePath).compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+								byte[] byteArray = byteArrayOutputStream .toByteArray();
+								String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+								pictureAux = encoded;
 								cursor.close();
 							}
 						}

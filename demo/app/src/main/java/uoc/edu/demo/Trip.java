@@ -1,18 +1,21 @@
-package code;
+package uoc.edu.demo;
 
-import java.text.SimpleDateFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Trip {
-
-	private String image;
-	private Date initDate;
-	private String description;
-	private ArrayList<User> users;
-	private ArrayList<Expense> expenses;
+	@JsonProperty("image")
+	String image;
+	@JsonProperty("initDate")
+	String initDate;
+	@JsonProperty("description")
+	String description;
+	@JsonProperty("users")
+	ArrayList<User> users;
+	@JsonProperty("expenses")
+	ArrayList<Expense> expenses;
 	
-	Trip(String image, Date initDate, String description) {
+	Trip(String image, String initDate, String description) {
 		this.image = image;
 		this.initDate = initDate;
 		this.description = description;
@@ -29,14 +32,12 @@ public class Trip {
 		
 		return nameUsers;
 	}
-	
-	
-	
+
 	public String toString() {
 		String info = "{\n";
 		
-		info += "\n - Description : " + description;
-		info += "\n - Init Date : " + getDate();
+		info += "\n - Description : " + this.description;
+		info += "\n - Init Date : " + this.initDate;
 		info += "\n - Users: ";
 		for (User u : users) {
 			info += "\n\t" + u.toString();
@@ -47,14 +48,6 @@ public class Trip {
 		}
 		info += "\n}";
 		return info;
-	}
-	
-	
-	public String getDate() {
-	    String date = "";
-	    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-	    date = formatter.format(this.initDate);
-	    return date;
 	}
 	
 	public void addUser(User u) {

@@ -1,18 +1,20 @@
-package code;
+package uoc.edu.demo;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Expense {
-	private String description;
-	private int amount;
-	private Date date;
-	//private Position pos;
-	private Map<String, Integer> payers;
+	@JsonProperty("description")
+	String description;
+	@JsonProperty("amount")
+	int amount;
+	@JsonProperty("date")
+	String date;
+	@JsonProperty("payers")
+	Map<String, Integer> payers;
 	
-	Expense(String description, int amount, Date date){
+	Expense(String description, int amount, String date){
 		this.description = description;
 		this.amount = amount;
 		this.date = date;
@@ -30,23 +32,17 @@ public class Expense {
 	public int getTotalAmount() {
 		return this.amount;
 	}
-	public String getDate() {
-	    String date = "";
-	    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-	    date = formatter.format(this.date);
-	    return date;
-	}
-	
+
 	public void removePayer(String name) {
 		payers.remove(name);
 	}
 	
 	public String toString() {
 		String info = "{";
-		info += "\n - Expense: " + description;
-		info += "\n - Amount: " + amount;
-		info += "\n - Date: " + getDate();
-		info += "\n - Payers: " + payers;
+		info += "\n - Expense: " + this.description;
+		info += "\n - Amount: " + this.amount;
+		info += "\n - Date: " + this.date;
+		info += "\n - Payers: " + this.payers;
 		info += "\n }";
 		return info;
 	}

@@ -1,10 +1,15 @@
-package code;
+package uoc.edu.demo;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User {
-	private String name;
-	private String email;
-	private String image;
-	private int amount;
+	@JsonProperty("name")
+	String name;
+	@JsonProperty("email")
+	String email;
+	@JsonProperty("image")
+	String image;
+	@JsonProperty("amount")
+	int amount;
 	
 	
 	User(String name, String email, String img){
@@ -30,8 +35,8 @@ public class User {
 		String info = "";
 		
 		info += "{ ";
-		info += " Name: " + name;
-		info += ", Email: " + email;
+		info += " Name: " + this.name;
+		info += ", Email: " + this.email;
 		info += " }";
 		return info;
 	}
