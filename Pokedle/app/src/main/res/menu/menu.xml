@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/generacionI"
+        android:title="Generación I"
+        android:iconTint="@color/black"
+        />
+    <item
+        android:id="@+id/generacionII"
+        android:title="Generación II"
+        android:iconTint="@color/black"
+        />
+    <item
+        android:id="@+id/generacionIII"
+        android:title="Generación III"
+        android:iconTint="@color/black"
+        />
+    <item
+        android:id="@+id/generacionIV"
+        android:title="Generación IV"
+        android:iconTint="@color/black"
+        />
+    <item
+        android:id="@+id/generacionV"
+        android:title="Generación V"
+        android:iconTint="@color/black"
+        />
+    <item
+        android:id="@+id/generacionVI"
+        android:title="Generación VI"
+        android:iconTint="@color/black"
+        />
+    <item
+        android:id="@+id/generacionVII"
+        android:title="Generación VII"
+        android:iconTint="@color/black"
+        />
+</menu>
