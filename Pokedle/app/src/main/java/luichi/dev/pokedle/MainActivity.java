@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -64,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
 		globalResult = new ArrayList<Word>();
 		max_tries = 6;
 
+		//Para mayor usavilidad iniciamos el teclado al entrar
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
 		btn_ask.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -99,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 						startGame(s_word);
 					}
 				} else {
-					if(linearLayout.getChildCount() > 0){
+					if(linearLayout.getChildCount() > 0 && max_tries == 6){
 						linearLayout.removeAllViews();
 					}
 					draw(s_word, THERE_ARE_WORDS);
@@ -195,13 +198,13 @@ public class MainActivity extends AppCompatActivity {
 
 		for (int i = 1; i < letters.length; i++){
 			if(letters[i].compareTo(pokename[i]) == 0){
-				Letters l = new Letters(letters[i], "#6aaa64");
+				Letter l = new Letter(letters[i], "#6aaa64");
 				auxWord.setWords(l.getLetter(), l.getColor());
 			} else if(includes(pokemon, letters[i])){
-				Letters l = new Letters(letters[i], "#cab557");
+				Letter l = new Letter(letters[i], "#cab557");
 				auxWord.setWords(l.getLetter(), l.getColor());
 			} else {
-				Letters l = new Letters(letters[i], "#cccccc");
+				Letter l = new Letter(letters[i], "#cccccc");
 				auxWord.setWords(l.getLetter(), l.getColor());
 			}
 		}
@@ -227,6 +230,7 @@ public class MainActivity extends AppCompatActivity {
 		}
 
 		if(max_tries == 0){
+			btn_ask.setEnabled(false);
 			Toast.makeText(this, "\uD83D\uDCA5 You lost! The pokemon was "+ pokemon + ".", Toast.LENGTH_SHORT).show();
 		}
 	}
@@ -262,12 +266,14 @@ public class MainActivity extends AppCompatActivity {
 		for (Word w : globalResult){
 			drawButtons(w, word, linearLayout);
 		}
+
+		globalResult.clear();
 	}
 
 	private void drawButtons(Word words, String word, LinearLayout linearLayout) {
 		for (int i = 1; i <= word.length(); i++){
 			button = new Button(this);
-			Letters l = words.getLetter(i-1);
+			Letter l = words.getLetter(i-1);
 			button.setText(l.getLetter());
 			String color = l.getColor();
 			button.setBackgroundColor(Color.parseColor(color));

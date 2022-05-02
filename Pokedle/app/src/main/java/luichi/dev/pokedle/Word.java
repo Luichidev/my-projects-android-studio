@@ -4,22 +4,22 @@ import android.widget.Button;
 import java.util.ArrayList;
 
 public class Word {
-	private ArrayList<Letters> words;
+	private ArrayList<Letter> words;
 	private Button button;
 
 	public Word(){
-		words = new ArrayList<Letters>();
+		words = new ArrayList<Letter>();
 	}
 
-	public ArrayList<Letters> getWords() {
+	public ArrayList<Letter> getWords() {
 		return words;
 	}
 
 	public void setWords(String letter, String color){
-		this.words.add(new Letters(letter, color));
+		this.words.add(new Letter(letter, color));
 	}
 
-	public Letters getLetter(int index){
+	public Letter getLetter(int index){
 		return words.get(index);
 	}
 }

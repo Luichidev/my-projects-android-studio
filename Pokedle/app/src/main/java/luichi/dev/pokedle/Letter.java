@@ -1,10 +1,10 @@
 package luichi.dev.pokedle;
 
-public class Letters {
+public class Letter {
 	private String letter;
 	private String color;
 
-	Letters(String letter, String color){
+	Letter(String letter, String color){
 		this.letter = letter;
 		this.color = color;
 	}
